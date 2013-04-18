@@ -4,7 +4,7 @@ require 'google_drive'
 class StatementsSaver
 
   AUTH_LOGIN = "kirillkunst@gmail.com"
-  AUTH_PASSWORD = "annakirill"
+  AUTH_PASSWORD = "anna1989"
   FILE_PREFIX = "data_"
 
   def self.save(params)
