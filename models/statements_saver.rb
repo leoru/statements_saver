@@ -30,13 +30,13 @@ class StatementsSaver
 
     ws.synchronize()
 
-    send_mail(time,params)
+    #send_mail(time,params)
 
   end
 
   def self.send_mail(time,params)
     text = time + "; " + params[:device_id] + "; " + params[:statements]
-    Pony.mail :to => EMAIL_RECIEVER,
+    Pony.mail( :to => EMAIL_RECIEVER,
             :subject => 'Новые данные' ,
             :body => text ,
             :via => :smtp,
@@ -48,7 +48,7 @@ class StatementsSaver
               :password             => AUTH_PASSWORD,
               :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
               :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
-            }
+            })
   end
 
 
