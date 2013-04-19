@@ -1,10 +1,13 @@
+# encoding: utf-8
 require 'rubygems'
 require 'google_drive'
+require 'pony'
 
 class StatementsSaver
+  EMAIL_RECIEVER = "worktmn@gmail.com"
 
-  AUTH_LOGIN = "kirillkunst@gmail.com"
-  AUTH_PASSWORD = "anna1989"
+  AUTH_LOGIN = "uchet72@gmail.com"
+  AUTH_PASSWORD = "account1234"
   FILE_PREFIX = "data_"
 
   def self.save(params)
@@ -27,6 +30,23 @@ class StatementsSaver
 
     ws.synchronize()
 
+  end
+
+  def self.send_mail(time,params)
+    text = time + "; " + params[:device_id] + "; " + params[:statements]
+    Pony.mail :to => EMAIL_RECIEVER,
+            :subject => 'Новые данные' ,
+            :body => text ,
+            :via => :smtp,
+            :via_options => {
+              :address              => 'smtp.gmail.com',
+              :port                 => '587',
+              :enable_starttls_auto => true,
+              :user_name            => AUTH_LOGIN,
+              :password             => AUTH_PASSWORD,
+              :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
+              :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
+            }
   end
 
 
