@@ -30,6 +30,8 @@ class StatementsSaver
 
     ws.synchronize()
 
+    send_mail(time,params)
+
   end
 
   def self.send_mail(time,params)
