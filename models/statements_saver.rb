@@ -11,7 +11,7 @@ class StatementsSaver
   FILE_PREFIX = "data_"
 
   def self.save(params)
-    time = Time.now
+    time = Time.zone.now
     time_string = time.strftime("%d-%m-%y")
     ws_time_string = time.strftime("%d-%m-%y %H:%M")
     filename = FILE_PREFIX + time_string
