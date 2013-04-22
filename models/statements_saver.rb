@@ -11,9 +11,9 @@ class StatementsSaver
   FILE_PREFIX = "data_"
 
   def self.save(params)
-    time = Time.now.getgm + 21600
+    time = Time.now
     time_string = time.strftime("%d-%m-%y")
-    ws_time_string = time.strftime("%d-%m-%y %H:%M")
+    #ws_time_string = time.strftime("%d-%m-%y %H:%M")
     filename = FILE_PREFIX + time_string
     session = GoogleDrive.login(AUTH_LOGIN, AUTH_PASSWORD)
 
@@ -24,18 +24,18 @@ class StatementsSaver
     ws = ws_file.worksheets[0]
 
     row = ws.num_rows+1
-    ws[row,1] = ws_time_string
+    ws[row,1] = params[:date]
     ws[row,2] = params[:device_id]
     ws[row,3] = params[:statements]
 
     ws.synchronize()
 
-    send_mail(ws_time_string,params)
+    send_mail(params)
 
   end
 
-  def self.send_mail(time,params)
-    text = time + "; " + params[:device_id] + "; " + params[:statements]
+  def self.send_mail(params)
+    text = params[:date] + "; " + params[:device_id] + "; " + params[:statements]
     Pony.mail( :to => EMAIL_RECIEVER,
             :subject => 'Новые данные' ,
             :body => text ,
@@ -46,8 +46,8 @@ class StatementsSaver
               :enable_starttls_auto => true,
               :user_name            => AUTH_LOGIN,
               :password             => AUTH_PASSWORD,
-              :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
-              :domain               => "localhost.localdomain" # the HELO domain provided by the client to the server
+              :authentication       => :plain,
+              :domain               => "localhost.localdomain"
             })
   end
 
