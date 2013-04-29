@@ -5,7 +5,6 @@ require 'pony'
 
 class StatementsSaver
   EMAIL_RECIEVER = "worktmn@gmail.com"
-
   AUTH_LOGIN = "uchet72@gmail.com"
   AUTH_PASSWORD = "account1234"
   FILE_PREFIX = "data_"
